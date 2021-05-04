@@ -1,0 +1,12 @@
+.form_new_tasks {
+    display: flex;
+}
+
+.new_tasks_input {
+    width: 92%;
+}
+
+.new_tasks_button {
+    height: 50%;
+    width: 8%;
+}

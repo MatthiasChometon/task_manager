@@ -13,8 +13,8 @@ const App = () => (
       <div>
         <FormTask />
         <div className="taskManager_container">
-          <TaskManager tasks="in progress"/>
-          <TaskManager tasks="done"/>
+          <TaskManager taskState="false"/>
+          <TaskManager taskState="true"/>
         </div>
       </div>
     </Container>

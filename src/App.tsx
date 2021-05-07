@@ -7,14 +7,21 @@ import TaskManager from "./components/tasksManager/TaskManager";
 import "./App.scss"
 import axios from 'axios';
 import Task from './models/TaskModel'
-axios.defaults.baseURL = 'https://6091661250c25500176781bb.mockapi.io';
+import Flash from './components/flash/Flash';
+import flashType from './enumerations/FlashType';
 
+axios.defaults.baseURL = 'https://6091661250c25500176781bb.mockapi.io';
 interface IState {
   tasks: Task[];
+  flash: {
+    message: string,
+    type: string,
+    visibility: boolean
+  }
 }
 
 class App extends React.Component<IState>  {
-  readonly state = { tasks: Array<Task>() };
+  readonly state = { flash: { message: "", type: "", visibility: false }, tasks: Array<Task>() };
 
   componentDidMount() {
     this.getAllTasks().then(res => {
@@ -64,6 +71,9 @@ class App extends React.Component<IState>  {
           this.setState({
             tasks: this.sortByDate(newTasks)
           });
+          this.sendFlashMessage(`task successfully deleted`, flashType.success);
+        }).catch(err => {
+          this.sendFlashMessage(err.response.data, flashType.warning);
         })
       }
     });
@@ -73,11 +83,32 @@ class App extends React.Component<IState>  {
       return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
     });
   }
+
+  sendFlashMessage(message: string, type: string) {
+    this.setState(() => ({
+      flash: {
+        visibility: true,
+        message: message,
+        type: type
+      }
+    }))
+  }
+
+  hideFlashMessage() {
+    this.setState(prevState => ({
+      flash: {
+        ...prevState,
+        visibility: false
+      }
+    }))
+  }
+
   render() {
     return (
       <div>
         <Navbar />
         <Container className="mt-5 mb-5">
+          <Flash message={this.state.flash.message} type={this.state.flash.type} visibility={this.state.flash.visibility} hideFlash={() => this.hideFlashMessage()} />
           <div className="tasks_managers_container">
             <FormTask onCreatedTask={this.addTask} />
             <div className="tasks_managers">

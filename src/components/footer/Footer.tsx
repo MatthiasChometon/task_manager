@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import "./footer.css";
+import "./Footer.scss";
 
-class Footer extends Component {
+class Footer extends Component  {
     render() {
         return (
             <div className="footer">
-                <p>Task manager</p>
+                <p>© 2021 Task manager</p>
             </div>
         );
     }

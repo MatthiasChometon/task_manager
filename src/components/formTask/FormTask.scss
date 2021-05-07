@@ -1,0 +1,35 @@
+.form_new_tasks_container {
+    width: 100%;
+    @media (max-width: 600px) {
+        position: fixed;
+        bottom: 0;
+        background-color: rgb(255, 255, 255);
+    }
+
+    .form_new_tasks {
+        display: flex;
+        @media (max-width: 900px) {
+            flex-direction: column;
+            padding: 4%;
+        }
+        .new_tasks_input {
+            @media (max-width: 900px) {
+                width: 97%;
+            }
+            @media (min-width: 900px) {
+                width: 92%;
+            }
+        }
+    }
+
+    .new_tasks_button {
+        height: 50%;
+        @media (max-width: 900px) {
+            width: 97%;
+        }
+        @media (min-width: 900px) {
+            width: 8%;
+        }
+        min-width: 80px;
+    }
+}

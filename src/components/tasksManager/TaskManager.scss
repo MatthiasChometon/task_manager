@@ -1,0 +1,25 @@
+.tasks_manager {
+    @media (max-width: 900px) {
+        width: 100%;
+    }
+    @media (min-width: 900px) {
+        width: 50%;
+    }
+    margin: 8px;
+
+    .tasks_title_container {
+        height: 180px;
+    }
+
+    .tasks_manager_table {
+        table-layout: fixed;
+
+        td {
+            max-width: 100px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: normal;
+            word-break: break-word;
+        }
+    }
+}

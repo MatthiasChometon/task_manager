@@ -1,11 +1,19 @@
 import React, { Component } from 'react';
 import { Jumbotron } from 'react-bootstrap';
-import "./TaskManager.css"
+import "./TaskManager.scss"
 import { Table } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
+import Task from '../../models/TaskModel';
 
-class TasksManager extends Component {
-    changeStateTask(task_to_update) {
+interface IProps {
+    taskState: string;
+    tasks: Task[];
+    onUpdateTask: (task: Task) => void;
+    onDeleteTasks: () => void;
+}
+
+class TasksManager extends Component<IProps> {
+    changeStateTask(task_to_update: Task) {
         task_to_update.isComplete = !task_to_update.isComplete
         this.props.onUpdateTask(task_to_update)
     }
@@ -14,8 +22,8 @@ class TasksManager extends Component {
     }
     render() {
         return (
-            <div className="tasks_manager_container">
-                <Jumbotron>
+            <div className="tasks_manager">
+                <Jumbotron className="tasks_title_container">
                     {this.props.taskState === "false" &&
                         <div>
                             <h1>Tasks in progress</h1>
@@ -30,7 +38,7 @@ class TasksManager extends Component {
                         </div>
                     }
                 </Jumbotron>
-                <Table striped bordered hover>
+                <Table striped bordered hover className="tasks_manager_table">
                     <thead>
                         <tr>
                             <th>Description</th>

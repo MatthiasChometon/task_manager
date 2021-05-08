@@ -9,13 +9,12 @@ import axios from 'axios';
 axios.defaults.baseURL = 'https://6091661250c25500176781bb.mockapi.io';
 
 class App extends React.Component<{}> {
-
   render() {
     return (
       <div>
-        <Navbar />
-        <Container className="mt-5 mb-5">
-          <BrowserRouter>
+        <BrowserRouter>
+          <Navbar />
+          <Container className="mt-5 mb-5">
             <Switch>
               {routes.map((route, index) => {
                 return (
@@ -34,9 +33,9 @@ class App extends React.Component<{}> {
                 );
               })}
             </Switch>
-          </BrowserRouter>
-        </Container>
-        <Footer />
+          </Container>
+          <Footer />
+        </BrowserRouter>
       </div>
     )
   }

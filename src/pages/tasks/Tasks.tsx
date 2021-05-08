@@ -6,7 +6,8 @@ import axios, { AxiosError } from 'axios';
 import Task from '../../models/TaskModel'
 import Flash from '../../components/flash/Flash';
 import flashType from '../../enumerations/FlashType';
-import { RouteComponentProps } from 'react-router-dom';
+import { generatePath, RouteComponentProps } from 'react-router-dom';
+import TaskType from '../../enumerations/TaskType'
 
 interface IProps { }
 interface IState {
@@ -15,23 +16,37 @@ interface IState {
 }
 
 class App extends React.Component<IState & RouteComponentProps<any>, IProps>  {
-    readonly state = { tasks: Array<Task>(), tasksType: "all" };
+    readonly state = { tasks: Array<Task>(), tasksType: TaskType.all };
     childFlash: React.RefObject<Flash>;
 
-    constructor(props: any) {
+    constructor(props: IState & RouteComponentProps<any>) {
         super(props);
         this.childFlash = React.createRef();
     }
 
     componentDidMount() {
-        this.setState({
-            tasksType: this.props.match.params.tasksType
-        });
-        this.getAllTasks().then(res => {
-            this.setState({
-                tasks: this.sortByDate(this.state.tasks)
+        this.setSetupRoutes()
+        if (this.props.match.path !== '/') {
+            this.getAllTasks().then(res => {
+                this.setState({
+                    tasks: this.sortByDate(this.state.tasks)
+                });
+            })
+        }
+    }
+
+    setSetupRoutes() {
+        if (this.props.match.path === '/') {
+            let newTasksType;
+            if (window.screen.width > 900) {
+                newTasksType = TaskType.all;
+            } else {
+                newTasksType = TaskType.inprogress;
+            }
+            this.props.history.push({
+                pathname: generatePath('/tasks/:tasksType', { tasksType: newTasksType })
             });
-        })
+        }
     }
     async getAllTasks(): Promise<Task[]> {
         await axios.get(`/TASK`)
@@ -108,12 +123,13 @@ class App extends React.Component<IState & RouteComponentProps<any>, IProps>  {
             <div>
                 <Flash ref={this.childFlash} />
                 <div className="tasks_managers_container">
-                    <FormTask onCreatedTask={this.addTask} onErrorChild={this.onErrorChild} />
+                    {(this.props.match.params.tasksType === TaskType.all || this.props.match.params.tasksType === TaskType.inprogress) &&
+                        <FormTask onCreatedTask={this.addTask} onErrorChild={this.onErrorChild} />}
                     <div className="tasks_managers">
-                        {(this.state.tasksType === 'all' || this.state.tasksType === 'inprogress')
-                            && <TaskManager tasks={this.state.tasks} onUpdateTask={this.updateTask} onDeleteTasks={this.deleteTasks} taskState="false" />}
+                        {(this.props.match.params.tasksType === TaskType.all || this.props.match.params.tasksType === TaskType.inprogress) &&
+                            <TaskManager tasks={this.state.tasks} onUpdateTask={this.updateTask} onDeleteTasks={this.deleteTasks} taskState="false" />}
 
-                        {(this.state.tasksType === 'all' || this.state.tasksType === 'completed') &&
+                        {(this.props.match.params.tasksType === TaskType.all || this.props.match.params.tasksType === TaskType.completed) &&
                             <TaskManager tasks={this.state.tasks} onUpdateTask={this.updateTask} onDeleteTasks={this.deleteTasks} taskState="true" />}
                     </div>
                 </div>

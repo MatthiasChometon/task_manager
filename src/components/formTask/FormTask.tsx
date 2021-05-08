@@ -17,7 +17,7 @@ class FormTask extends Component<IProps, IState> {
     readonly state = { taskDescription: "" };
     inputNewTask: any;
 
-    handleTaskChange = (event: any) => {
+    handleTaskChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         this.setState({ taskDescription: event.target.value });
     }
     addNewTask() {
@@ -39,7 +39,7 @@ class FormTask extends Component<IProps, IState> {
             <div className="form_new_tasks_container">
                 <Form className="form_new_tasks">
                     <Form.Group className="new_tasks_input">
-                        <Form.Control ref={(el: any) => this.inputNewTask = el} placeholder="Enter your new task" onChange={this.handleTaskChange} />
+                        <Form.Control ref={(el: HTMLInputElement) => this.inputNewTask = el} placeholder="Enter your new task" onChange={this.handleTaskChange} />
                     </Form.Group>
                     <Button className="new_tasks_button" variant="primary" onClick={() => this.addNewTask()}>
                         Create

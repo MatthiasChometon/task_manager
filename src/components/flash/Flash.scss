@@ -1,0 +1,9 @@
+.flash_messages_container {
+    position: fixed;
+    top: 30px;
+    right: 40px;
+
+    .flash_message_title {
+        font-size: medium;
+    }
+}

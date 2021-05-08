@@ -5,23 +5,26 @@ import Footer from "./components/footer/Footer";
 import Container from 'react-bootstrap/Container';
 import TaskManager from "./components/tasksManager/TaskManager";
 import "./App.scss"
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import Task from './models/TaskModel'
 import Flash from './components/flash/Flash';
 import flashType from './enumerations/FlashType';
 
 axios.defaults.baseURL = 'https://6091661250c25500176781bb.mockapi.io';
+
+interface IProps {}
 interface IState {
   tasks: Task[];
-  flash: {
-    message: string,
-    type: string,
-    visibility: boolean
-  }
 }
 
-class App extends React.Component<IState>  {
-  readonly state = { flash: { message: "", type: "", visibility: false }, tasks: Array<Task>() };
+class App extends React.Component<IState, IProps>  {
+  readonly state = { tasks: Array<Task>()};
+  childFlash: React.RefObject<Flash>;
+
+  constructor(props: IState | Readonly<IState>) {
+    super(props);
+    this.childFlash = React.createRef();
+  }
 
   componentDidMount() {
     this.getAllTasks().then(res => {
@@ -46,6 +49,7 @@ class App extends React.Component<IState>  {
     this.setState({
       tasks: this.sortByDate(this.state.tasks)
     });
+    this.setNewFlashMessage(`task ${newTask.description} successfully added`, flashType.success);
   }
   updateTask = (taskChanged: Task) => {
     axios.put(`/TASK/` + taskChanged.id, { isComplete: taskChanged.isComplete, description: taskChanged.description })
@@ -58,6 +62,7 @@ class App extends React.Component<IState>  {
             this.setState({
               tasks: this.sortByDate(tasks)
             })
+            this.setNewFlashMessage(`task ${taskUpdated.description} has been updated`, flashType.success);
           }
         }
       })
@@ -71,9 +76,9 @@ class App extends React.Component<IState>  {
           this.setState({
             tasks: this.sortByDate(newTasks)
           });
-          this.sendFlashMessage(`task successfully deleted`, flashType.success);
+          this.setNewFlashMessage(`task successfully deleted`, flashType.success);
         }).catch(err => {
-          this.sendFlashMessage(err.response.data, flashType.warning);
+          this.setNewFlashMessage(err.response.data, flashType.warning);
         })
       }
     });
@@ -84,23 +89,16 @@ class App extends React.Component<IState>  {
     });
   }
 
-  sendFlashMessage(message: string, type: string) {
-    this.setState(() => ({
-      flash: {
-        visibility: true,
-        message: message,
-        type: type
-      }
-    }))
+  onErrorChild = (error: AxiosError) => {
+    if (error.response !== undefined) {
+      this.setNewFlashMessage(error.response.data, flashType.warning);
+    }
   }
 
-  hideFlashMessage() {
-    this.setState(prevState => ({
-      flash: {
-        ...prevState,
-        visibility: false
-      }
-    }))
+  setNewFlashMessage(message: string, type: string){
+    if(this.childFlash.current) {
+      this.childFlash.current.sendFlashMessage(message, type);
+    }
   }
 
   render() {
@@ -108,9 +106,9 @@ class App extends React.Component<IState>  {
       <div>
         <Navbar />
         <Container className="mt-5 mb-5">
-          <Flash message={this.state.flash.message} type={this.state.flash.type} visibility={this.state.flash.visibility} hideFlash={() => this.hideFlashMessage()} />
+          <Flash ref={this.childFlash} />
           <div className="tasks_managers_container">
-            <FormTask onCreatedTask={this.addTask} />
+            <FormTask onCreatedTask={this.addTask} onErrorChild={this.onErrorChild} />
             <div className="tasks_managers">
               <TaskManager tasks={this.state.tasks} onUpdateTask={this.updateTask} onDeleteTasks={this.deleteTasks} taskState="false" />
               <TaskManager tasks={this.state.tasks} onUpdateTask={this.updateTask} onDeleteTasks={this.deleteTasks} taskState="true" />

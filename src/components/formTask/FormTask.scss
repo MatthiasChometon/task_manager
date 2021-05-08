@@ -1,10 +1,5 @@
 .form_new_tasks_container {
     width: 100%;
-    @media (max-width: 600px) {
-        position: fixed;
-        bottom: 0;
-        background-color: rgb(255, 255, 255);
-    }
 
     .form_new_tasks {
         display: flex;

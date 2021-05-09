@@ -45,7 +45,7 @@ The purpose of the application is to manage tasks.
 
 You can add new tasks to your "in progress" tasks, move a task "in progress" to "completed" and vice versa and delete all completed tasks. When a task is updated, delete or add a notification appear. You can close the notification with the close icon. If you stay over the notice it will disappear after your mouse leaves the notice. In the computer version, the "in progress" and "completed" tasks are displayed on the same page. However In the mobile version, the tasks are separated on two different routes. I added a button in the page "theme" to change the actual theme of the application.The application is hosted at the following url : https://taskmanager0.netlify.app/
 
-I founded newly the library "Material-UI" and i would like to implement it.
+I founded newly the library "Material-UI" and i would like to implement it. I would like too to add an authentication system.
 
 ### Main libraries
 

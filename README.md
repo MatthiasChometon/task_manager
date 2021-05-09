@@ -49,6 +49,6 @@ The swap theme is not finished.
 
 I founded newly the library "Material-UI" and i would like to implement it.
 
-### Principal library
+### Main libraries
 
 I use typescript because it allows to have a stricter and more secure code. I use react-bootstrap to go faster in development and react-router-dom to manage the routes of my application.

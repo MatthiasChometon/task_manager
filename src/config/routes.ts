@@ -1,19 +1,26 @@
 import IRoute from '../interfaces/route';
-import TasksPage from '../pages/tasks/Tasks';
+import TaskPage from '../pages/tasks/Tasks';
+import ThemePage from '../pages/theme/ChooseTheme'
 
-const routes: IRoute[] = [
+const Routes: IRoute[] = [
     {
         path: '/',
         name: 'Home Page',
-        component: TasksPage,
+        component: TaskPage,
         exact: true
     },
     {
         path: '/tasks/:tasksType',
         name: 'Tasks Page',
-        component: TasksPage,
+        component: TaskPage,
         exact: true
     },
+    {
+        path: '/theme',
+        name: 'Theme Page',
+        component: ThemePage,
+        exact: true
+    }
 ]
 
-export default routes;
+export default Routes;

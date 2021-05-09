@@ -3,7 +3,7 @@ import Navbar from "./components/navbar/Navbar";
 import Footer from "./components/footer/Footer";
 import Container from 'react-bootstrap/Container';
 import { BrowserRouter, Route, Switch, RouteComponentProps } from 'react-router-dom';
-import routes from './config/routes';
+import Routes from './config/Routes';
 import axios from 'axios';
 
 axios.defaults.baseURL = 'https://6091661250c25500176781bb.mockapi.io';
@@ -16,7 +16,7 @@ class App extends React.Component<{}> {
           <Navbar />
           <Container className="mt-5 mb-5">
             <Switch>
-              {routes.map((route, index) => {
+              {Routes.map((route, index) => {
                 return (
                   <Route
                     key={index}

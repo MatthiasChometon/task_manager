@@ -15,17 +15,17 @@ interface IState {
     tasksType: string
 }
 
-class App extends React.Component<IState & RouteComponentProps<any>, IProps>  {
+class Tasks extends React.Component<IState & RouteComponentProps<any>, IProps>  {
     readonly state = { tasks: Array<Task>(), tasksType: TaskType.all };
     childFlash: React.RefObject<Flash>;
 
     constructor(props: IState & RouteComponentProps<any>) {
         super(props);
+        this.setSetupRoutes()
         this.childFlash = React.createRef();
     }
 
     componentDidMount() {
-        this.setSetupRoutes()
         if (this.props.match.path !== '/') {
             this.getAllTasks().then(res => {
                 this.setState({
@@ -137,4 +137,4 @@ class App extends React.Component<IState & RouteComponentProps<any>, IProps>  {
         )
     }
 }
-export default App;
+export default Tasks;

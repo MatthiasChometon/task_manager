@@ -1,5 +1,7 @@
 import React from "react";
 import { Nav, Navbar } from 'react-bootstrap';
+import { Link } from "react-router-dom";
+import "./NavApp.scss";
 
 class NavApp extends React.Component {
     render() {
@@ -8,14 +10,14 @@ class NavApp extends React.Component {
                 <Navbar.Brand href="/">Tasks Manager</Navbar.Brand>
                 {window.screen.width < 900 &&
                     <Nav className="mr-auto">
-                        <Nav.Link href="/tasks/inprogress">in progress</Nav.Link>
-                        <Nav.Link href="/tasks/completed">completed</Nav.Link>
-                        <Nav.Link href="/theme">theme</Nav.Link>
+                        <Link to="/tasks/inprogress">in progress</Link>
+                        <Link to="/tasks/completed">completed</Link>
+                        <Link to="/theme">theme</Link>
                     </Nav>}
                 {window.screen.width > 900 &&
                     <Nav className="mr-auto">
-                        <Nav.Link href="/tasks/all">tasks</Nav.Link>
-                        <Nav.Link href="/theme">theme</Nav.Link>
+                        <Link to="/tasks/all">tasks</Link>
+                        <Link to="/theme">theme</Link>
                     </Nav>}
             </Navbar>
         )

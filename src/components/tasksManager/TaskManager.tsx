@@ -33,7 +33,7 @@ class TasksManager extends Component<IProps> {
                         <div>
                             <h1>Tasks done</h1>
                             <p>
-                                <Button variant="primary" onClick={() => this.deleteCompletedTasks()}>Clear all</Button>
+                                <Button variant="secondary" onClick={() => this.deleteCompletedTasks()}>Clear all</Button>
                             </p>
                         </div>
                     }

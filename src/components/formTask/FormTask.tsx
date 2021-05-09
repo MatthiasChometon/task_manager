@@ -41,7 +41,7 @@ class FormTask extends Component<IProps, IState> {
                     <Form.Group className="new_tasks_input">
                         <Form.Control ref={(el: HTMLInputElement) => this.inputNewTask = el} placeholder="Enter your new task" onChange={this.handleTaskChange} />
                     </Form.Group>
-                    <Button className="new_tasks_button" variant="primary" onClick={() => this.addNewTask()}>
+                    <Button variant="secondary" className="new_tasks_button" onClick={() => this.addNewTask()}>
                         Create
                     </Button>
                 </Form>

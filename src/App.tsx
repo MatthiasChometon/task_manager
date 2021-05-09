@@ -2,7 +2,7 @@ import React from 'react';
 import Navbar from "./components/navbar/NavApp";
 import Footer from "./components/footer/Footer";
 import Container from 'react-bootstrap/Container';
-import { BrowserRouter, Route, Switch, RouteComponentProps } from 'react-router-dom';
+import { HashRouter, Route, Switch, RouteComponentProps } from 'react-router-dom';
 import Routes from './config/Routes';
 import axios from 'axios';
 
@@ -12,7 +12,7 @@ class App extends React.Component<{}> {
   render() {
     return (
       <div>
-        <BrowserRouter>
+        <HashRouter >
           <Navbar />
           <Container className="mt-5 mb-5">
             <Switch>
@@ -35,7 +35,7 @@ class App extends React.Component<{}> {
             </Switch>
           </Container>
           <Footer />
-        </BrowserRouter>
+        </HashRouter>
       </div>
     )
   }
